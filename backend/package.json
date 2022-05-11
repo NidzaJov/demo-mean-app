@@ -2,7 +2,8 @@
   "name": "angular-app",
   "version": "0.0.0",
   "scripts": {
-    "start:server": "nodemon ./backend/server.js"
+    "start:server": "nodemon ./backend/server.js",
+    "start": "node server.js"
   },
   "private": true,
   "dependencies": {
