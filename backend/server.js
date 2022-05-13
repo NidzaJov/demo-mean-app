@@ -45,13 +45,6 @@ const onListening = () => {
 const port = normalizePort(process.env.PORT || "3000");
 app.set('port', port);
 
-app.use(function (req, res, next){
-  if (req.headers['x-forwarded-proto'] === 'https') {
-    res.redirect('http://' + req.hostname + req.url);
-  } else {
-    next();
-  }
-});
 
 const server = http.createServer(app);
 server.on("error", onError);
