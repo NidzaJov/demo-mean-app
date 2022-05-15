@@ -2,8 +2,8 @@ import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { Router } from "@angular/router";
 import { Subject } from "rxjs";
-import { AuthData } from "./auth-data.model";
 
+import { AuthData } from "./auth-data.model";
 import { environment } from "../../environments/environment"
 
 const BACKEND_URL = environment.apiUrl + '/user/';
@@ -37,11 +37,13 @@ export class AuthService {
   createUser(email: string, password: string) {
     const authData: AuthData = { email: email, password: password }
     this.http.post(BACKEND_URL + "/signup", authData)
-      .subscribe(() => {
+      .subscribe(
+        () => {
         this.router.navigate(['/']);
-      }, error => {
-        this.authStatusListener.next(false);
-      })
+        },
+        error => {
+          this.authStatusListener.next(false);
+        })
   }
 
   login(email: string, password: string) {
@@ -54,10 +56,12 @@ export class AuthService {
           const expiresInDuration = response.expiresIn;
           this.setAuthTimer(expiresInDuration);
           this.isAuthenticated = true;
-          this.userId = response.userId
+          this.userId = response.userId;
           this.authStatusListener.next(true);
           const now = new Date();
-          const expirationDate = new Date(now.getTime() + expiresInDuration * 1000);
+          const expirationDate = new Date(
+            now.getTime() + expiresInDuration * 1000
+            );
           console.log(expirationDate);
           this.saveAuthData(token, expirationDate, this.userId)
           this.router.navigate(['/']);

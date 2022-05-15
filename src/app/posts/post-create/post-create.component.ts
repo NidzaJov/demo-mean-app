@@ -2,6 +2,7 @@ import { Component, OnDestroy, OnInit } from "@angular/core";
 import { FormGroup, FormControl, Validators } from "@angular/forms";
 import { ActivatedRoute, ParamMap } from "@angular/router";
 import { Subscription } from "rxjs";
+
 import { AuthService } from "src/app/auth/auth.service";
 import { Post } from "../post.model";
 import { PostsService } from "../posts.service";
@@ -29,24 +30,6 @@ export class PostCreateComponent implements OnInit, OnDestroy{
     public route: ActivatedRoute,
     public authService: AuthService
     )  {}
-
-  onSavePost() {
-    if (this.form.invalid) {
-      return;
-    }
-    this.isLoading = true;
-    if (this.mode === 'create') {
-      this.postsService.addPost(this.form.value.title, this.form.value.content, this.form.value.image)
-    } else {
-      this.postsService.updatePost(
-        this.postId,
-        this.form.value.title,
-        this.form.value.content,
-        this.form.value.image
-      )
-    }
-    this.form.reset();
-  }
 
   ngOnInit() {
     this.authStatusSub =this.authService
@@ -88,13 +71,29 @@ export class PostCreateComponent implements OnInit, OnDestroy{
     const file = (event.target as HTMLInputElement).files[0];
     this.form.patchValue({image: file});
     this.form.get('image').updateValueAndValidity();
-    console.log(file);
-    console.log(this.form);
     const reader = new FileReader();
     reader.onload = () => {
       this.imagePreview = (reader.result as string);
     }
     reader.readAsDataURL(file);
+  }
+
+  onSavePost() {
+    if (this.form.invalid) {
+      return;
+    }
+    this.isLoading = true;
+    if (this.mode === 'create') {
+      this.postsService.addPost(this.form.value.title, this.form.value.content, this.form.value.image)
+    } else {
+      this.postsService.updatePost(
+        this.postId,
+        this.form.value.title,
+        this.form.value.content,
+        this.form.value.image
+      )
+    }
+    this.form.reset();
   }
 
   ngOnDestroy() {

@@ -12,7 +12,7 @@
        required
        email
        >
-       <mat-error *ngIf="emailInput.invalid">Please enter a valid mail</mat-error>
+       <mat-error *ngIf="emailInput.invalid">Please enter a valid email</mat-error>
     </mat-form-field>
     <mat-form-field>
       <input
@@ -29,7 +29,5 @@
       mat-raised-button
       color="accent"
       type="submit" *ngIf="!isLoading">Login</button>
-      <mat-spinner *ngIf="isLoading"></mat-spinner>
   </form>
-
 </mat-card>

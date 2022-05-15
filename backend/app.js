@@ -19,22 +19,27 @@ mongoose.connect(`mongodb+srv://sedcuser:${process.env.MONGO_ATLAS_PW}@cluster0.
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use("/images", express.static(path.join(__dirname, "images")));
-app.use("", express.static(path.join(__dirname, "angular")));
+
+// This is for production deployment!
+//app.use("", express.static(path.join(__dirname, "angular")));
 
 app.use((req, res, next) => {
   res.setHeader('Access-Control-Allow-Origin', "*");
   res.setHeader("Access-Control-Allow-Headers", "X_Requested_With, Content-Type, Accept, Authorization");
   res.setHeader(
     "Access-Control-Allow-Methods",
-    "GET, POST, PATCH, DELETE, OPTIONS, PUT"
+    "GET, POST, PATCH, PUT, DELETE, OPTIONS"
   );
   next();
 });
 
 app.use('/api/posts', postsRoutes);
 app.use('/api/user', userRoutes);
+
+// This is for production deployment!
+/*
 app.use((req, res, next) => {
   res.sendFile(path.join(__dirname, "angular", "index.html"));
 })
-
+*/
 module.exports = app;

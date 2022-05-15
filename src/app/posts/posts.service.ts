@@ -1,10 +1,10 @@
-import { Injectable, OnInit } from "@angular/core";
+import { Injectable } from "@angular/core";
 import { Subject } from 'rxjs'
-import { Post } from "./post.model";
 import { HttpClient } from "@angular/common/http";
 import { map } from 'rxjs/operators';
 import { Router } from "@angular/router";
 
+import { Post } from "./post.model";
 import { environment } from "../../environments/environment"
 
 const BACKEND_URL = environment.apiUrl + '/posts/';
@@ -46,7 +46,13 @@ export class PostsService {
   }
 
   getPost(id: string) {
-    return this.http.get<{_id: string, title: string, content: string, imagePath: string, creator: string}>(BACKEND_URL + id);
+    return this.http.get<{
+      _id: string,
+      title: string,
+      content: string,
+      imagePath: string,
+      creator: string
+    }>(BACKEND_URL + id);
   }
 
   addPost(title: string, content: string, image: File) {
@@ -78,12 +84,9 @@ export class PostsService {
         imagePath: image,
         creator: null
       }
-
     }
-
     this.http.put(BACKEND_URL + id, postData)
       .subscribe(response => {
-        console.log();
         this.router.navigate(["/"]);
       })
   }

@@ -41,12 +41,4 @@ testem.log
 .DS_Store
 Thumbs.db
 
-*
-!backend/
-!backend/angular
-!backend/controllers
-!backend/images
-!backend/middleware
-!backend/models
-!backend/routes
-!Procfile
+

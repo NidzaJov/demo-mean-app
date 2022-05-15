@@ -1,5 +1,4 @@
 const Post = require('../models/post');
-const { json } = require('body-parser');
 
 exports.cretePost = (req, res, next) => {
   const url = req.protocol + '://' + req.get("host");
@@ -41,8 +40,8 @@ exports.updatePost = (req, res, next) => {
     imagePath: imagePath,
     creator: req.userData.userId
   })
-  Post.updateOne({ _id: req.params.id, creator: req.userData.userId }, post).then(result => {
-    console.log(result);
+  Post.updateOne({ _id: req.params.id, creator: req.userData.userId }, post)
+  .then(result => {
     if (result.matchedCount > 0) {
       res.status(200).json({ message: "Update succesful!" })
     } else {
@@ -51,7 +50,7 @@ exports.updatePost = (req, res, next) => {
   })
   .catch(error => {
     res.status(500).json({
-      message: "Couldn't get post!"
+      message: "Couldn't update post!"
     })
   })
 }

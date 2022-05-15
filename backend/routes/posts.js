@@ -8,19 +8,9 @@ const checkAuth = require('../middleware/check-auth');
 
 const router = express.Router();
 
-router.post(
-  "",
-  checkAuth,
-  extractFile,
-  PostsController.cretePost
-  )
+router.post("", checkAuth, extractFile, PostsController.cretePost)
 
-router.put(
-  "/:id",
-  checkAuth,
-  extractFile,
-  PostsController.updatePost
-  )
+router.put("/:id", checkAuth, extractFile, PostsController.updatePost)
 
 router.get("", PostsController.getPosts);
 
