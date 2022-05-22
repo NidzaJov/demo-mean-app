@@ -7,6 +7,9 @@ import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import {MatPaginatorModule} from '@angular/material/paginator';
 import {MatDialogModule} from '@angular/material/dialog';
 import { MatCardModule } from '@angular/material/card';
+import {MatSelectModule} from '@angular/material/select';
+import {MatIconModule} from '@angular/material/icon';
+import {MatDividerModule} from '@angular/material/divider';
 
 @NgModule({
   exports: [
@@ -18,6 +21,9 @@ import { MatCardModule } from '@angular/material/card';
     MatProgressSpinnerModule,
     MatPaginatorModule,
     MatDialogModule,
+    MatSelectModule,
+    MatIconModule,
+    MatDividerModule
   ]
 })
 export class AngularMaterialModule {

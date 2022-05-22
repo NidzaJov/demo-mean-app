@@ -1,10 +1,11 @@
 import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { Router } from "@angular/router";
-import { Subject } from "rxjs";
+import { BehaviorSubject, Observable, Subject } from "rxjs";
 
 import { AuthData } from "./auth-data.model";
-import { environment } from "../../environments/environment"
+import { environment } from "../../environments/environment";
+
 
 const BACKEND_URL = environment.apiUrl + '/user/';
 
@@ -15,8 +16,26 @@ export class AuthService {
   private tokenTimer: any;
   private userId: string;
   private authStatusListener = new Subject<boolean>();
+  private roleSubject: BehaviorSubject<string>;
+  public role: Observable<string>;
+  private userIdSubject: BehaviorSubject<string>;
+  public userIdObs: Observable<string>;
 
-  constructor(private http: HttpClient, private router: Router) {}
+
+  constructor(private http: HttpClient, private router: Router) {
+    this.roleSubject = new BehaviorSubject<string>(localStorage.getItem('role'));
+    this.role = this.roleSubject.asObservable();
+    this.userIdSubject = new BehaviorSubject<string>(localStorage.getItem('userId'));
+    this.userIdObs = this.userIdSubject.asObservable();
+  }
+
+  get userIdValue(): string {
+    return this.userIdSubject.value;
+  }
+
+  get roleValue(): string {
+    return this.roleSubject.value;
+  }
 
   getToken() {
     return this.token;
@@ -36,7 +55,7 @@ export class AuthService {
 
   createUser(email: string, password: string) {
     const authData: AuthData = { email: email, password: password }
-    this.http.post(BACKEND_URL + "/signup", authData)
+    this.http.post(BACKEND_URL + "signup", authData)
       .subscribe(
         () => {
         this.router.navigate(['/']);
@@ -47,8 +66,8 @@ export class AuthService {
   }
 
   login(email: string, password: string) {
-    const authData : AuthData = { email: email, password: password}
-    this.http.post<{ token: string, expiresIn: number, userId: string }>(BACKEND_URL + "/login", authData)
+    const authData : AuthData = { email: email, password: password }
+    this.http.post<{ token: string, expiresIn: number, userId: string, role: string }>(BACKEND_URL + "/login", authData)
       .subscribe(response => {
         const token = response.token;
         this.token = token;
@@ -58,12 +77,13 @@ export class AuthService {
           this.isAuthenticated = true;
           this.userId = response.userId;
           this.authStatusListener.next(true);
+          this.roleSubject.next(response.role);
+          this.userIdSubject.next(response.userId);
           const now = new Date();
           const expirationDate = new Date(
             now.getTime() + expiresInDuration * 1000
             );
-          console.log(expirationDate);
-          this.saveAuthData(token, expirationDate, this.userId)
+          this.saveAuthData(token, expirationDate, this.userId, response.role);
           this.router.navigate(['/']);
         }
       }, error => {
@@ -94,6 +114,8 @@ export class AuthService {
     this.userId = null;
     clearTimeout(this.tokenTimer);
     this.clearAuthData();
+    this.roleSubject.next(null);
+    this.userIdSubject.next(null);
     this.router.navigate(['/']);
   }
 
@@ -103,16 +125,18 @@ export class AuthService {
     }, duration * 1000)
   }
 
-  private saveAuthData(token: string, expirationDate: Date, userId: string) {
+  private saveAuthData(token: string, expirationDate: Date, userId: string, role: string) {
     localStorage.setItem('token', token);
     localStorage.setItem("expiration", expirationDate.toISOString());
     localStorage.setItem("userId", userId);
+    localStorage.setItem('role', role);
   }
 
   private clearAuthData() {
     localStorage.removeItem("token");
     localStorage.removeItem('expiration');
     localStorage.removeItem("userId");
+    localStorage.removeItem('role');
   }
 
   private getAuthData() {
@@ -125,7 +149,7 @@ export class AuthService {
     return {
       token: token,
       expirationDate: new Date(expirationDate),
-      userId: userId
+      userId: userId,
     }
   }
 }

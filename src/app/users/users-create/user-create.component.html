@@ -1,0 +1,68 @@
+<mat-card>
+  <mat-spinner *ngIf="isLoading"></mat-spinner>
+  <div class="image-div">
+    <img [src]="imagePath" [alt]="form.value.firstName + ' ' + form.value.lastName" >
+  </div>
+  <form [formGroup]="form" (submit)="onSaveUser()" *ngIf="!isLoading">
+    <mat-form-field>
+      <input
+       matInput
+       type="email"
+       placeholder="E-mail"
+       formControlName="email"
+       required
+       email
+       >
+       <mat-error *ngIf="form.get('email').invalid">Please enter a valid mail</mat-error>
+    </mat-form-field>
+    <mat-form-field *ngIf="mode == 'create'">
+      <input
+       type="password"
+       matInput
+       placeholder="Password"
+       formControlName="password"
+       required>
+      <mat-error *ngIf="form.get('password').invalid">Please enter a valid password</mat-error>
+    </mat-form-field>
+    <mat-form-field>
+      <input
+       matInput
+       type="text"
+       formControlName="firstName"
+       placeholder="First Name"
+       >
+      <mat-error *ngIf="form.get('firstName').invalid">Please enter a user first name</mat-error>
+    </mat-form-field>
+    <mat-form-field>
+      <input
+       matInput
+       type="text"
+       formControlName="lastName"
+       placeholder="Last Name"
+       >
+      <mat-error *ngIf="form.get('lastName').invalid">Please enter a user last name</mat-error>
+    </mat-form-field>
+    <mat-form-field *ngIf ="currentRole==='Admin'">
+      <mat-label>User's role</mat-label>
+      <mat-select formControlName="roleControl" [(value)]="roles[1]" required>
+        <mat-option>Pick a role for user</mat-option>
+        <mat-option *ngFor="let role of roles" [value]="role" >
+          {{role}}
+        </mat-option>
+      </mat-select>
+      <mat-error *ngIf="form.get('roleControl').hasError('required')">Please choose a role</mat-error>
+    </mat-form-field>
+    <div>
+      <button mat-stroked-button type="button" (click)="filePicker.click()">Pick Image</button>
+      <input type="file" #filePicker (change)="onImagePicked($event)">
+    </div>
+    <div class="image-preview" *ngIf="imagePreview !== '' && imagePreview && form.get('image').valid">
+      <img [src]="imagePreview" [alt]="form.value.firstName + ' ' + form.value.lastname" >
+    </div>
+    <div style="height:2rem"></div>
+    <button
+      mat-raised-button
+      color="accent"
+      type="submit">Save User</button>
+  </form>
+</mat-card>

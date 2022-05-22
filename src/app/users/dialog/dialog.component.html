@@ -1,0 +1,9 @@
+<mat-spinner *ngIf="isLoading"></mat-spinner>
+<h1 mat-dialog-title> Confirmation needed</h1>
+<div mat-dialog-content>
+  <p class="mat-body-1">{{ data?.message }}</p>
+</div>
+<div mat-dialog-actions>
+  <button mat-button mat-dialog-close (click)="OnDeletionConfirmed(data.userId, data.usersPerPage, data.currentPage)">Yes</button>
+  <button mat-button mat-dialog-close>No</button>
+</div>
