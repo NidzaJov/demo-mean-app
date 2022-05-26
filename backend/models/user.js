@@ -7,9 +7,27 @@ const userSchema = mongoose.Schema({
   email: { type: String, required: true, unique: true },
   password: { type: String, required: true },
   imagePath: { type: String },
-  role: { type: String, required: true }
+  role: { type: String, required: true },
+  verificationToken: String,
+  verified: Date,
+  resetToken: {
+    token: String,
+    expires: Date
+  },
+  passwordReset: Date,
+  created: { type: Date, default: Date.Now},
+  updated: Date
 });
 
 userSchema.plugin(uniqueValidator);
+
+userSchema.virtual('isVerified').get(function() {
+  return !!(this.verified || this.passwordReset)
+})
+
+userSchema.set('toJSON', {
+  virtuals: true,
+  versionKey: false,
+})
 
 module.exports = mongoose.model("User", userSchema);

@@ -57,15 +57,7 @@ export class AdminComponent implements OnInit, OnDestroy {
   }
 
   onDelete(userId: string) {
-    //this.isLoading = true;
     this.dialog.open(DialogComponent, { data: {message: `Do you want to delete this user?`, userId: userId, usersPerPage: this.usersPerPage, currentPage: this.currentPage}})
-    /*
-    this.usersService.deleteUser(userId).subscribe(() => {
-      this.usersService.getUsers(this.usersPerPage, this.currentPage)
-    }, () => {
-      this.isLoading = false;
-    });
-    */
   }
 
   ngOnDestroy() {

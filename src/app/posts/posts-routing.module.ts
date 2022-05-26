@@ -6,7 +6,6 @@ import { AuthGuard } from "../auth/auth.guard";
 
 const routes: Routes = [
   { path: 'edit/:postId', component: PostCreateComponent, canActivate: [AuthGuard], data: { roles: ["Admin", "Regular"]} },
-  //{ path: '', component: PostListComponent, canActivate: [AuthGuard], data: { roles: ["Admin", "Regular"]} },
   { path: 'create', component: PostCreateComponent, canActivate: [AuthGuard], data: { roles: ["Admin", "Regular"]} }
 ]
 

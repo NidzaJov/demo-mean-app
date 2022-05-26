@@ -67,7 +67,7 @@ export class AuthService {
 
   login(email: string, password: string) {
     const authData : AuthData = { email: email, password: password }
-    this.http.post<{ token: string, expiresIn: number, userId: string, role: string }>(BACKEND_URL + "/login", authData)
+    this.http.post<{ token: string, expiresIn: number, userId: string, role: string }>(BACKEND_URL + "login", authData)
       .subscribe(response => {
         const token = response.token;
         this.token = token;

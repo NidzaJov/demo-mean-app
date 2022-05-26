@@ -14,7 +14,10 @@ export class UsersService {
   private users: User [] = [];
   private usersUpdated = new Subject<{users: User[], usersCount: number}>();
 
-  constructor(private http: HttpClient, private router: Router) {}
+  constructor(
+    private http: HttpClient,
+    private router: Router,
+    ) {}
 
   getUsers(usersPerPage: number, currentUser: number) {
     const queryParams = `?pageSize=${usersPerPage}&page=${currentUser}`;
@@ -23,7 +26,7 @@ export class UsersService {
       .pipe(map((userData) => {
         return { users: userData.users.map(user => {
           return {
-            id: user._id,
+            id: user.userId,
             firstName: user.firstName,
             lastName: user.lastName,
             email: user.email,
@@ -117,4 +120,20 @@ export class UsersService {
   deleteUser(userId: string) {
     return this.http.delete(`${BACKEND_URL}${userId}`);
   }
+
+  verifyEmail(token: string) {
+    return this.http.post(`${BACKEND_URL}/verify-email`, { token })
+  }
+
+  forgotPassword(email: string) {
+    return this.http.post(`${BACKEND_URL}/forgot-password`, { email });
+  }
+
+  resetPassword(token: string, password: string, confirmPassword: string) {
+    return this.http.post(`${BACKEND_URL}/reset-password`, { token, password, confirmPassword });
+  }
+
+  validateResetToken(token: string) {
+    return this.http.post(`${BACKEND_URL}/validate-reset-token`, { token });
+}
 }

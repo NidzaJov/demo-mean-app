@@ -1,0 +1,11 @@
+{
+  "emailFrom" : "info@etheral.email",
+  "smtpOptions": {
+    "host": "smtp.ethereal.email",
+    "port": 587,
+    "auth": {
+      "user": "santa.rau65@ethereal.email",
+      "pass": "H2q9pGYRH8KRJUQk4v"
+    }
+  }
+}

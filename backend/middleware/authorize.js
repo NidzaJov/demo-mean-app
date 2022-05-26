@@ -1,4 +1,3 @@
-//const { expressjwt: jwt } = require('express-jwt');
 const jwt = require("jsonwebtoken");
 
 const secret = process.env.JWT_KEY;
@@ -9,7 +8,6 @@ module.exports = (roles = []) => {
   }
 
   return [
-    //jwt({ secret, algorithms: ['HS256']}),
     (req, res, next) => {
       const token = req.headers.authorization.split(" ")[1];
       const decodedToken = jwt.verify(token, process.env.JWT_KEY);

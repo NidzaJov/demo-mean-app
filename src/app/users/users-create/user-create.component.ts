@@ -7,6 +7,7 @@ import { AuthService } from '../../auth/auth.service';
 import { UsersService } from '../users.service';
 import { mimeType } from "../../posts/post-create/mime-type.validator";
 import { Role } from 'src/app/roles/role.model';
+import { MustMatch } from '../../_helpers/must-match.validator';
 
 @Component({
   selector: 'app-user-create',
@@ -52,12 +53,13 @@ export class UserCreateComponent implements OnInit, OnDestroy{
     });
     this.form = new FormGroup({
       'email': new FormControl(null, {validators: [Validators.required]}),
-      'password': new FormControl(null, { validators: [Validators.required]}),
       'firstName': new FormControl(null, {validators: [Validators.required]}),
       'lastName': new FormControl(null, { validators: [Validators.required]}),
       'image': new FormControl(null, {validators: [Validators.required], asyncValidators: [mimeType]}),
+      'password': new FormControl('', { validators: [Validators.minLength(3)]}),
+      'confirmPassword': new FormControl(''),
       roleControl: new FormControl(null, { validators: [Validators.required]})
-    })
+    }, MustMatch)
     this.route.paramMap.subscribe((paramMap: ParamMap ) => {
       if (paramMap.has('userId')) {
         this.mode = 'edit';
@@ -70,7 +72,8 @@ export class UserCreateComponent implements OnInit, OnDestroy{
           'firstName': user.firstName?? '',
           'lastName': user.lastName?? '',
           'email': user.email,
-          'password': user.password,
+          'password': '',
+          'confirmPassword': '',
           'image': user.imagePath,
           roleControl: user.role
         });

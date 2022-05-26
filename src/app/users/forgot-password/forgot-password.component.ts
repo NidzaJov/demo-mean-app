@@ -1,0 +1,52 @@
+import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { first, finalize } from 'rxjs/operators';
+import { Router } from '@angular/router';
+
+import { UsersService } from '../users.service';
+
+@Component({ templateUrl: 'forgot-password.component.html' })
+export class ForgotPasswordComponent implements OnInit {
+    form: FormGroup;
+    loading = false;
+    submitted = false;
+
+    constructor(
+        private formBuilder: FormBuilder,
+        private usersService: UsersService,
+        private router: Router,
+    ) {}
+
+    ngOnInit() {
+        this.form = this.formBuilder.group({
+            email: ['', [Validators.required, Validators.email]]
+        });
+    }
+
+    // convenience getter for easy access to form fields
+    get f() { return this.form.controls; }
+
+    onSubmit() {
+        this.submitted = true;
+
+        // reset alerts on submit
+
+        // stop here if form is invalid
+        if (this.form.invalid) {
+            return;
+        }
+
+        this.loading = true;
+        this.usersService.forgotPassword(this.f.email.value)
+          .pipe(first())
+          .pipe(finalize(() => this.loading = false))
+          .subscribe(
+            () => {
+              this.router.navigate(['/users/reset-password']);
+              },
+            error => {
+
+            }
+          )
+    }
+}

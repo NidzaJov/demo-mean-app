@@ -14,6 +14,7 @@ import { PostsModule } from './posts/posts.module';
 import { UsersModule } from './users/users.module';
 import { AuthModule } from './auth/auth.module';
 import { DialogComponent } from './users/dialog/dialog.component';
+import { VerifyEmailComponent } from './users/verify-email/verify-email.component';
 
 
 @NgModule({
@@ -21,7 +22,8 @@ import { DialogComponent } from './users/dialog/dialog.component';
     AppComponent,
     HeaderComponent,
     ErrorComponent,
-    DialogComponent
+    DialogComponent,
+    VerifyEmailComponent,
   ],
   imports: [
     BrowserModule,
