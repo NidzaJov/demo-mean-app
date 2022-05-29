@@ -19,9 +19,9 @@ export class PostCreateComponent implements OnInit, OnDestroy{
   enteredTitle= '';
   public post: Post;
   isLoading = false;
-  form: FormGroup;
-  imagePreview: string;
-  private mode = 'create';
+  public form: FormGroup;
+  public imagePreview: string;
+  public mode = 'create';
   private postId: string;
   private authStatusSub: Subscription;
 
@@ -42,7 +42,7 @@ export class PostCreateComponent implements OnInit, OnDestroy{
         validators: [Validators.required, Validators.minLength(3)]
       }),
       'content': new FormControl(null, { validators: [Validators.required]}),
-      'image': new FormControl(null, {validators: [Validators.required], asyncValidators: [mimeType]})
+      'image': new FormControl(null, { asyncValidators: [mimeType] })
     })
     this.route.paramMap.subscribe((paramMap: ParamMap ) => {
       if (paramMap.has('postId')) {
