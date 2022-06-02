@@ -60,7 +60,6 @@ export class PostsService {
     postData.append("title", title);
     postData.append("content", content);
     postData.append("image", image, title);
-    console.log(postData);
     this.http.post<{ message: string, post: Post }>(BACKEND_URL, postData)
       .subscribe((responseData) => {
         this.router.navigate(["/"]);

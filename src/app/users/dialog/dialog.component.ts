@@ -3,7 +3,8 @@ import { MAT_DIALOG_DATA } from "@angular/material/dialog";
 import { UsersService } from "../users.service";
 
 @Component({
-  templateUrl: './dialog.component.html'
+  templateUrl: './dialog.component.html',
+  styleUrls: ['./dialog.component.css']
 })
 export class DialogComponent {
   constructor(

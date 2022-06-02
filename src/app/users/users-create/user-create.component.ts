@@ -32,7 +32,8 @@ export class UserCreateComponent implements OnInit, OnDestroy{
   private authStatusSub: Subscription;
   private roleSubs: Subscription;
   public currentRole: string;
-  public roles: Role[] = [Role.Admin, Role.Regular]
+  public roles: Role[] = [Role.Admin, Role.Regular];
+  public unknownUserImagePath: string;
 
   constructor(
       private usersService: UsersService,
@@ -84,6 +85,7 @@ export class UserCreateComponent implements OnInit, OnDestroy{
       } else {
         this.mode = 'create';
         this.userId = null;
+        this.unknownUserImagePath = 'http://localhost:3000/images/blank-profile-picture.png'
       }
     });
   }

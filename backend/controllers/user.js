@@ -19,7 +19,7 @@ exports.createUser = (req, res, next) => {
           lastName: req.body.lastName?? ``,
           email: req.body.email,
           password: hash,
-          imagePath: req.file? url + '/images/' + req.file.filename : '',
+          imagePath: req.file? url + '/images/' + req.file.filename : url + '/images/' + 'blank-profile-picture.png',
           role: req.body.role?? "Regular",
           verificationToken: randomTokenString(),
         });

@@ -5,3 +5,8 @@ mat-form-field {
 mat-spinner {
   margin: auto;
 }
+
+.text-right {
+  display: flex;
+  justify-content: flex-end;
+}
