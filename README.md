@@ -17,7 +17,7 @@ Run `ng serve` for running frontend on a dev server. Navigate to `http://localho
 
 ## Build
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+Run `ng build` to build the Angular frontend of project. The build artifacts will be stored in the `backend/angular` directory.
 
 ## Running unit tests
 
