@@ -5,7 +5,7 @@ App has authentication security feature (consists of login and signup components
 App has authorization feature implemented through user Roles (Regular/Admin) and some routes are guarded with AuthGuard from unauthorized approaches. On backend, authorization is implemented through auth-middleware which verifies user’s role from JWT token signature.
 App has posts feature with CRUD operations for Post entity which is available for both roles. This feature was not required by Milos but when I have followed the Udemy MEAN course in the first week of internship I have made that feature and used it as a basic blueprint for other features and decided to leave it in the project as a sort of a testing ground.
 App has users feature with CRUD operations for User entity. Admin role has authorization to use all operations, and regular user can use only editing his own profile.
-Current task is that the app needs to be covered with unit tests (80% coverage in jasmine and karma). 
+Current task is that the app needs to be covered with unit tests (80% coverage in Jasmine and Karma). 
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 13.3.5.
 
